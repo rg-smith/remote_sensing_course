@@ -1,6 +1,6 @@
 # Define a method for displaying Earth Engine image tiles on a folium map.
 def add_ee_layer(self, ee_object, vis_params, name):
-    
+    import ee
     try:    
         # display ee.Image()
         if isinstance(ee_object, ee.image.Image):    
