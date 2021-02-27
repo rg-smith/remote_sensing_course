@@ -1,4 +1,3 @@
-import gee
 # Define a method for displaying Earth Engine image tiles on a folium map.
 def add_ee_layer(self, ee_object, vis_params, name):
     
