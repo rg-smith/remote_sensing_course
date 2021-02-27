@@ -47,6 +47,7 @@ def add_ee_layer(self, ee_object, vis_params, name):
         print("Could not display {}".format(name))
     
 def add_geometry(min_lon,max_lon,min_lat,max_lat):
+    import ee
     geom = ee.Geometry.Polygon(
         [[[min_lon, max_lat],
           [min_lon, min_lat],
@@ -55,11 +56,13 @@ def add_geometry(min_lon,max_lon,min_lat,max_lat):
     return(geom)
 
 def get_l8_image(date,geometry,bands):
+    import ee
     l8 = ee.ImageCollection('LANDSAT/LC08/C01/T1_RT')
     l8_img = l8.filterDate(i_date,f_date).filterBounds(geom).select(bands).first()
     return(l8_img)
 
 def get_s2_image(date,geometry,bands):
+    import ee
     s2 = ee.ImageCollection('COPERNICUS/S2')
     s2_img = s2.filterDate(i_date,f_date).filterBounds(geom).select(bands).first()
     return(s2_img)
