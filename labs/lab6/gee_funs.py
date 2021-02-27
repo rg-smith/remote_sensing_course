@@ -1,3 +1,4 @@
+import gee
 # Define a method for displaying Earth Engine image tiles on a folium map.
 def add_ee_layer(self, ee_object, vis_params, name):
     
@@ -46,5 +47,20 @@ def add_ee_layer(self, ee_object, vis_params, name):
     except:
         print("Could not display {}".format(name))
     
-# Add EE drawing method to folium.
-folium.Map.add_ee_layer = add_ee_layer
+def add_geometry(min_lon,max_lon,min_lat,max_lat):
+    geom = ee.Geometry.Polygon(
+        [[[min_lon, max_lat],
+          [min_lon, min_lat],
+          [max_lon, min_lat],
+          [max_lon, max_lat]]])
+    return(geom)
+
+def get_l8_image(date,geometry,bands):
+    l8 = ee.ImageCollection('LANDSAT/LC08/C01/T1_RT')
+    l8_img = l8.filterDate(i_date,f_date).filterBounds(geom).select(bands).first()
+    return(l8_img)
+
+def get_s2_image(date,geometry,bands):
+    s2 = ee.ImageCollection('COPERNICUS/S2')
+    s2_img = s2.filterDate(i_date,f_date).filterBounds(geom).select(bands).first()
+    return(s2_img)
